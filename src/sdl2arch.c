@@ -22,8 +22,6 @@ int main(int argc, char *argv[]) {
     	}
 	
 	atexit(emulation_cleanup);
-	
-	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
 	core_main(argc,argv);
 	

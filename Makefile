@@ -5,7 +5,7 @@ INCLUDES := -I. -I./src
 CFLAGS   := -Wall -O2 -g $(INCLUDES)
 LDFLAGS  := -static-libgcc
 LIBS     := -lm
-packages := sdl2 SDL2_image
+packages := sdl2 
 
 # do not edit from here onwards
 objects := $(addprefix build/,$(sources:.c=.o))

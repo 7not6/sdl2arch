@@ -1,4 +1,5 @@
 #include "common.h"
+#include "font10x16.h"
 
 extern SDL_Renderer* renderer;
 
@@ -7,8 +8,22 @@ static SDL_Texture *fontTexture;
 
 void initFonts(void)
 {
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading font10x16.png" );
-	fontTexture =  IMG_LoadTexture(renderer, "./font10x16.png");	
+	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "init font10x16 texture" );	
+	//fontTexture =  IMG_LoadTexture(renderer, "./font10x16.png");	
+	SDL_Surface *tmp = NULL;
+	tmp = SDL_CreateRGBSurfaceFrom((void *)font10x16, 160, 256, 32,160*4, 0xff000000, 0x00ff0000, 0x0000ff00,0x000000ff);
+	
+	if(NULL == tmp){
+		fprintf(stderr, "Error SDL_CreateRGBSurface tmp: %s", SDL_GetError());	
+		goto quit;
+	}
+		
+	fontTexture = SDL_CreateTextureFromSurface(renderer, tmp);
+	
+	SDL_FreeSurface(tmp);
+	
+	quit:
+
 	if (!fontTexture)printf("create font failed\n");
 }
 

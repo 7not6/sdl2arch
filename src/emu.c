@@ -97,7 +97,5 @@ void emulation_cleanup(void)
 	
 	cleanWidgets();
 		
-	IMG_Quit();
-		
 	SDL_Quit(); 
 }
