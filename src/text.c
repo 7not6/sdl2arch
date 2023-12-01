@@ -11,7 +11,30 @@ void initFonts(void)
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "init font10x16 texture" );	
 	//fontTexture =  IMG_LoadTexture(renderer, "./font10x16.png");	
 	SDL_Surface *tmp = NULL;
-	tmp = SDL_CreateRGBSurfaceFrom((void *)font10x16, 160, 256, 32,160*4, 0xff000000, 0x00ff0000, 0x0000ff00,0x000000ff);
+	unsigned char tmpfont[FONT10X16_WIDTH*FONT10X16_HEIGHT*4];
+	
+	int i,j,n,ind=0;
+	Uint32 *ptr=(Uint32*)tmpfont;
+	unsigned char binary[8];
+	
+	for(j=0;j<FONT10X16_HEIGHT;j++){
+	
+		for(i=0;i<FONT10X16_WIDTH;i+=8){
+		
+			unsigned char val=font10x16[ind++];
+			
+			for(n = 0; n < 8; n++)
+			 	binary[7-n] = (val >> n) & 1;
+			 	
+			for(n = 0; n < 8; n++){	
+				if(binary[n] == 1)*ptr=0xffffffff;
+				else *ptr=0;	
+				ptr++;
+			} 						
+		}		
+	}
+	
+	tmp = SDL_CreateRGBSurfaceFrom((void *)tmpfont, FONT10X16_WIDTH, FONT10X16_HEIGHT, 32,FONT10X16_WIDTH*4, 0xff000000, 0x00ff0000, 0x0000ff00,0x000000ff);
 	
 	if(NULL == tmp){
 		fprintf(stderr, "Error SDL_CreateRGBSurface tmp: %s", SDL_GetError());	
