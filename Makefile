@@ -1,9 +1,11 @@
-target   := nanoarch
-sources  := nanoarch.c
-CFLAGS   := -Wall -O2 -g
+target   := sdl2arch
+sources  := src/sdl2arch.c src/audio.c src/core-libretro.c src/emu.c src/fifo.c src/input.c 
+sources  += src/menu.c src/render-sdl2.c src/text.c src/utli.c src/video.c src/widgets.c src/core-options.c
+INCLUDES := -I. -I./src
+CFLAGS   := -Wall -O2 -g $(INCLUDES)
 LDFLAGS  := -static-libgcc
-LIBS     := -ldl
-packages := gl glew glfw3 alsa
+LIBS     := -lm
+packages := sdl2 SDL2_image
 
 # do not edit from here onwards
 objects := $(addprefix build/,$(sources:.c=.o))
